@@ -1,0 +1,40 @@
+﻿@model PaymentQueryViewModel
+
+@{
+    string[] source = { "Cash", "Check", "Credit Card" };
+    SelectList selectList = new SelectList(source, source[0]);
+    ViewBag.SelectItems = selectList;
+}
+
+<div>
+    <h1>Вход в личный кабинет</h1>
+    <div class="div-box">
+        <form  asp-controller="Payment" asp-action="Index" method="post" >
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="PaymentId"></label>
+                <input asp-for="PaymentId" />
+                <span asp-validation-for="PaymentId"></span>
+            </div>
+            <div>
+                <label asp-for="Amount"></label>
+                <input asp-for="Amount" />
+                <span asp-validation-for="Amount"></span>
+            </div>
+            <div>
+                <label asp-for="PaymentDate"></label>
+                <input asp-for="PaymentDate" />
+                <span asp-validation-for="PaymentDate"></span>
+            </div>
+            <div>
+                <select asp-for="PaymentType" asp-items="ViewBag.SelectItems"></select>
+@*                <label asp-for="PaymentType"></label>
+                <input asp-for="PaymentType" />*@
+                <span asp-validation-for="PaymentType"></span>
+            </div>
+            <div>
+                <input type="submit" value="Войти" />
+            </div>
+        </form>
+    </div>
+</div>

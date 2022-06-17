@@ -1,0 +1,4 @@
+У кого не подключается к (local)\\SQLSERVER, в Visual Studio Installer вкладка "рабочие нагрузки" ставим"хранение и обработка данных". Далее в командной строке по очереди пишем 
+SqlLocalDB create
+SqlLocalDB start MSSQLLocalDB
+В строке подключения Data Source будет (localdb)\\MSSQLLocalDB, а в Management Studio (localdb)\MSSQLLocalDB с аутенфикацией Windows
