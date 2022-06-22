@@ -1,24 +1,27 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MyCompany.Service;
-using MonitoringPrice.Data.Entities.Models;
 using MonitoringPrice.Data.Repositories;
 using MonitoringPrice.Web.Service;
 using MonitoringPrice.Data.Interfaces;
+using MonitoringPrice.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Bind("Project", new Config());
-builder.Services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>(); 
-builder.Services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<ICharacteristicRepository, CharacteristicRepository>();
-builder.Services.AddTransient<IManufacturerRepository, ManufacturerRepository>();
-builder.Services.AddTransient<IPriceRepository, PriceRepository>();
-builder.Services.AddTransient<IProductRepository, ProductRepository>();
-builder.Services.AddTransient<IRamRepository, RamRepository>();
-builder.Services.AddTransient<IUrlRepository, UrlRepository>();
-builder.Services.AddTransient<DbManager>();
-//builder.Services.AddTransient<IUnitOfWork, EntityUnitOfWork>();
+
+builder.Services.AddScoped<IUnitOfWork, EntityUnitOfWork>();
+
+//builder.Services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>(); 
+//builder.Services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
+//builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddTransient<ICharacteristicRepository, CharacteristicRepository>();
+//builder.Services.AddTransient<IManufacturerRepository, ManufacturerRepository>();
+//builder.Services.AddTransient<IPriceRepository, PriceRepository>();
+//builder.Services.AddTransient<IProductRepository, ProductRepository>();
+//builder.Services.AddTransient<IRamRepository, RamRepository>();
+//builder.Services.AddTransient<IUrlRepository, UrlRepository>();
+//builder.Services.AddTransient<DbManager>();
+
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
 
 //настраиваем identity систему

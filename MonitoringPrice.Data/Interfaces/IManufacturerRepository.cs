@@ -4,6 +4,6 @@ namespace MonitoringPrice.Data.Interfaces
 {
     public interface IManufacturerRepository : IRepositoryEntity<Manufacturer>
     {
-        void Save(Manufacturer entity);
+        Task<int> SaveAsync(Manufacturer entity);
     }
 }

@@ -8,9 +8,10 @@ namespace MonitoringPrice.Data.Interfaces
     /// <typeparam name="TEntity"></typeparam>
     public interface IRepositoryEntity<TEntity> where TEntity : class
     {
-        TEntity GetById(int id);
-        IQueryable<TEntity> GetAll();
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        void Delete(int id);
+        Task<TEntity> GetByIdAsync(int id);
+        Task<IQueryable<TEntity>> GetAllAsync();
+        Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        void DeleteAsync(int id);
     }
 }

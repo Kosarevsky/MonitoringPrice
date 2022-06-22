@@ -1,20 +1,22 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MonitoringPrice.Data.Entities.Models;
 
-namespace MonitoringPrice.Data.Entities.Models
+namespace MonitoringPrice.Data
 {
     public sealed class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-        public DbSet<TextField> TextFields { get; set; }
-        public DbSet<ServiceItem> ServiceItems { get; set; }
-        public DbSet<Category> Category { get; set; }
-        public DbSet<Characteristic> Characteristic { get; set; }
-        public DbSet<Price> Price { get; set; }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<Ram> Ram { get; set; }
-        public DbSet<Url> Url { get; set; }
+        public DbSet<TextField> TextFields { get; set; } = null!;
+        public DbSet<ServiceItem> ServiceItems { get; set; } = null!;
+        public DbSet<Category> Category { get; set; } = null!;
+        public DbSet<Characteristic> Characteristic { get; set; } = null!;
+        public DbSet<Manufacturer> Manufacturer { get; set; } = null!;
+        public DbSet<Price> Price { get; set; } = null!;
+        public DbSet<Product> Product { get; set; } = null!;
+        public DbSet<Ram> Ram { get; set; } = null!;
+        public DbSet<Url> Url { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,7 +67,7 @@ namespace MonitoringPrice.Data.Entities.Models
             });
 
             modelBuilder.Entity<Category>().HasData(new Category
-            {  Id = 1, CategoryName = "Смартфоны"  });
+            { Id = 1, CategoryName = "Смартфоны" });
             modelBuilder.Entity<Category>().HasData(new Category
             { Id = 2, CategoryName = "Планшеты" });
 
@@ -73,8 +75,8 @@ namespace MonitoringPrice.Data.Entities.Models
             { Id = 1, ManufacturerName = "Xiaomi" });
 
             modelBuilder.Entity<Manufacturer>().HasData(new Manufacturer
-            { Id = 2, ManufacturerName = "POCO" }); 
-            
+            { Id = 2, ManufacturerName = "POCO" });
+
             modelBuilder.Entity<Manufacturer>().HasData(new Manufacturer
             { Id = 3, ManufacturerName = "RealMe" });
 
@@ -82,19 +84,19 @@ namespace MonitoringPrice.Data.Entities.Models
             { Id = 4, ManufacturerName = "UMIDIGI" });
 
             modelBuilder.Entity<WebSite>().HasData(new WebSite
-            { Id =1 , Name = "Aliexpress"});
-            
+            { Id = 1, Name = "Aliexpress" });
+
             modelBuilder.Entity<WebSite>().HasData(new WebSite
             { Id = 2, Name = "Banggood" });
 
             modelBuilder.Entity<Product>().HasData(new Product
-            { Id = 1, ManufacturerId = 1,  CategoryId = 1, ProductName = "Redmi 10" });
+            { Id = 1, ManufacturerId = 1, CategoryId = 1, ProductName = "Redmi 10" });
 
             modelBuilder.Entity<Product>().HasData(new Product
-            { Id = 2, ManufacturerId =4,  CategoryId = 1, ProductName = "A11" });
+            { Id = 2, ManufacturerId = 4, CategoryId = 1, ProductName = "A11" });
 
             modelBuilder.Entity<Ram>().HasData(new Ram
-            { Id = 1,  ProductId=1,  RamName = "4/64 ГБ"});
+            { Id = 1, ProductId = 1, RamName = "4/64 ГБ" });
 
             modelBuilder.Entity<Url>().HasData(new Url
             { Id = 1, RamId = 1, Link = "https://aliexpress.ru/item/1005003212627329.html" });

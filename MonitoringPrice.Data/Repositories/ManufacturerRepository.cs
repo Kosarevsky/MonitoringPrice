@@ -10,13 +10,13 @@ namespace MonitoringPrice.Data.Repositories
         {
         }
 
-        public void Save(Manufacturer entity)
+        public async Task<int> SaveAsync(Manufacturer entity)
         {
             if (entity.Id == default)
                 Context.Entry(entity).State = EntityState.Added;
             else
                 Context.Entry(entity).State = EntityState.Modified;
-            Context.SaveChanges();
+            return await Context.SaveChangesAsync();
         }
     }
 }

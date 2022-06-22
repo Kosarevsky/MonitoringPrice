@@ -1,5 +1,4 @@
-﻿using MonitoringPrice.Data.Entities.Models;
-using MonitoringPrice.Data.Interfaces;
+﻿using MonitoringPrice.Data.Interfaces;
 
 
 namespace MonitoringPrice.Data.Repositories
@@ -7,6 +6,11 @@ namespace MonitoringPrice.Data.Repositories
     public sealed class EntityUnitOfWork :IUnitOfWork
     {
         private readonly AppDbContext _context;
+        public EntityUnitOfWork(AppDbContext context)
+        {
+            _context = context;
+
+        }
 
         private CategoryRepository _categoryRepository;
         public ICategoryRepository Category => _categoryRepository

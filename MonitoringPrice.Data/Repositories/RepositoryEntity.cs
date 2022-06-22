@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MonitoringPrice.Data.Entities.Models;
 using MonitoringPrice.Data.Interfaces;
 using System.Linq.Expressions;
 
@@ -15,26 +14,37 @@ namespace MonitoringPrice.Data.Repositories
             _dbSet = Context.Set<TEntity>();
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public async Task<IQueryable<TEntity>> GetAllAsync()
         {
-            return _dbSet;
+            var query = await _dbSet.ToListAsync();
+            return query.AsQueryable();
         }
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+
+        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.Where(predicate);
+            var query = await _dbSet.Where(predicate).ToListAsync();
+            return query.AsQueryable();
         }
-        public void Delete(int id)
+
+        public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var entity = _dbSet.Find(id);
+            var query = await _dbSet.Where(predicate).ToListAsync();
+            return query.AsQueryable();
+        }
+        public async void DeleteAsync(int id)
+        {
+            var entity = await _dbSet.FindAsync(id);
 
             if (entity == null) return;
             _dbSet.Remove(entity);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
+
+
     }
 }
