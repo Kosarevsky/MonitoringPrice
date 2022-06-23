@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MyCompany.Service;
-using MonitoringPrice.Data.Repositories;
 using MonitoringPrice.Web.Service;
-using MonitoringPrice.Data.Interfaces;
-using MonitoringPrice.Data;
+using MonitoringPrice.WebApi.Interfaces;
+using MonitoringPrice.WebApi.Entities.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Bind("Project", new Config());

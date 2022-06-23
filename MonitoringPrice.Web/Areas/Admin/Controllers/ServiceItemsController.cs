@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MonitoringPrice.Data.Entities.Models;
+using MonitoringPrice.WebApi.Entities.Models;
 using MyCompany.Service;
 
 namespace MonitoringPrice.Web.Areas.Admin.Controllers

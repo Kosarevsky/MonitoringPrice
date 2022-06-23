@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MonitoringPrice.Data.Entities.Models;
-using MonitoringPrice.Data.Interfaces;
+using MonitoringPrice.WebApi.Interfaces;
 
 namespace MonitoringPrice.Web.Areas.Admin.Controllers
 {
@@ -15,7 +14,9 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
+            var aaa = _dbManager.Product.GetAllAsync();
             return View(_dbManager.Product.GetAllAsync());
+
         }
     }
 }
