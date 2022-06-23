@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MonitoringPrice.WebApi.Interfaces;
+using MonitoringPrice.Services.Interfaces;
+using MonitoringPrice.Services.Models;
 
 namespace MonitoringPrice.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class HomeController : Controller
     {
-        private readonly IUnitOfWork _dbManager;
+        private readonly IManufacturerService _manufacturerService;
 
-        public HomeController(IUnitOfWork dbManager)
+        public HomeController(IManufacturerService manufacturerService)
         {
-            _dbManager = dbManager;
+            _manufacturerService = manufacturerService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var aaa = _dbManager.Product.GetAllAsync();
-            return View(_dbManager.Product.GetAllAsync());
+            IEnumerable<ManufacturerModel> bbb = await _manufacturerService.GetAllManufacturerFromApi();
+            return View(bbb);
 
         }
     }

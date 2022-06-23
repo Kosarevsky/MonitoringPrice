@@ -4,11 +4,23 @@ using MyCompany.Service;
 using MonitoringPrice.Web.Service;
 using MonitoringPrice.WebApi.Interfaces;
 using MonitoringPrice.WebApi.Entities.Context;
+using MonitoringPrice.Services.Interfaces;
+using MonitoringPrice.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Bind("Project", new Config());
 
 builder.Services.AddScoped<IUnitOfWork, EntityUnitOfWork>();
+
+
+builder.Services.AddTransient<IManufacturerService, ManufacturerService>();
+
+var uri = "http://localhost:5201/api/";
+builder.Services.AddHttpClient<IManufacturerService, ManufacturerService>(client =>
+{
+    client.BaseAddress = new Uri(uri);
+});
+
 
 //builder.Services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>(); 
 //builder.Services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
