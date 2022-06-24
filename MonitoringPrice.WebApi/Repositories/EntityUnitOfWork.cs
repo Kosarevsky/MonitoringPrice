@@ -38,9 +38,5 @@ namespace MonitoringPrice.WebApi.Interfaces
         private UrlRepository _urlRepository;
         public IUrlRepository Url => _urlRepository
             ?? (_urlRepository = new UrlRepository(_context));
-
-        private EFServiceItemsRepository _eFServiceItemsRepository;
-        public IServiceItemsRepository EFServiceItems => _eFServiceItemsRepository
-            ?? (_eFServiceItemsRepository = new EFServiceItemsRepository(_context));
     }
 }

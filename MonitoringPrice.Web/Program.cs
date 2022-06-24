@@ -1,19 +1,14 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using MyCompany.Service;
 using MonitoringPrice.Web.Service;
-using MonitoringPrice.WebApi.Interfaces;
-using MonitoringPrice.WebApi.Entities.Context;
 using MonitoringPrice.Services.Interfaces;
 using MonitoringPrice.Services.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Bind("Project", new Config());
 
-builder.Services.AddScoped<IUnitOfWork, EntityUnitOfWork>();
-
-
 builder.Services.AddTransient<IManufacturerService, ManufacturerService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
 
 var uri = "http://localhost:5201/api/";
 builder.Services.AddHttpClient<IManufacturerService, ManufacturerService>(client =>
@@ -22,47 +17,32 @@ builder.Services.AddHttpClient<IManufacturerService, ManufacturerService>(client
 });
 
 
-//builder.Services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>(); 
-//builder.Services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
-//builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-//builder.Services.AddTransient<ICharacteristicRepository, CharacteristicRepository>();
-//builder.Services.AddTransient<IManufacturerRepository, ManufacturerRepository>();
-//builder.Services.AddTransient<IPriceRepository, PriceRepository>();
-//builder.Services.AddTransient<IProductRepository, ProductRepository>();
-//builder.Services.AddTransient<IRamRepository, RamRepository>();
-//builder.Services.AddTransient<IUrlRepository, UrlRepository>();
-//builder.Services.AddTransient<DbManager>();
-
-builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
-
-//настраиваем identity систему
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(opts =>
-{
-    opts.User.RequireUniqueEmail = true;
-    opts.Password.RequiredLength = 6;
-    opts.Password.RequireNonAlphanumeric = false;
-    opts.Password.RequireLowercase = false;
-    opts.Password.RequireUppercase = false;
-    opts.Password.RequireDigit = false;
-}).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-
 //настраиваем authentication cookie
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.Name = "myCompanyAuth";
-    options.Cookie.HttpOnly = true;
-    options.LoginPath = "/account/login";
-    options.AccessDeniedPath = "/account/accessdenied";
-    options.SlidingExpiration = true;
-});
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "myCompanyAuth";
+        options.Cookie.HttpOnly = true;
+        options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+        options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+        options.SlidingExpiration = true;
+    });
+
+
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.Cookie.Name = "myCompanyAuth";
+//    options.Cookie.HttpOnly = true;
+//    options.LoginPath = "/account/login";
+//    options.AccessDeniedPath = "/account/accessdenied";
+//    options.SlidingExpiration = true;
+//});
 
 //настраиваем политику авторизации для Admin area
 builder.Services.AddAuthorization(x =>
 {
     x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
 });
-
-//builder.Services.AddControllersWithViews();
 
 //добавляем сервисы для контроллеров и представлений (MVC)
 builder.Services.AddControllersWithViews(x =>
@@ -72,9 +52,10 @@ builder.Services.AddControllersWithViews(x =>
 
 var app = builder.Build();
 
-app.UseRouting();
 app.UseDeveloperExceptionPage();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 

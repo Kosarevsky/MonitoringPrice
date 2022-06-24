@@ -35,7 +35,7 @@ namespace MonitoringPrice.WebApi.Controllers
           {
               return NotFound();
           }
-            var manufacturer = await _context.Manufacturer.FindAsync(id);
+            var manufacturer = await _context.Manufacturer.FirstOrDefaultAsync(x => x.Id == id);
 
             if (manufacturer == null)
             {

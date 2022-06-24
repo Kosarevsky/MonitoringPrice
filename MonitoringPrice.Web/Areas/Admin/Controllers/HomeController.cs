@@ -17,7 +17,12 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
         {
             IEnumerable<ManufacturerModel> bbb = await _manufacturerService.GetAllManufacturerFromApi();
             return View(bbb);
+        }
 
+        public async Task<ActionResult> Edit(int id)
+        {
+            var model = id == default ? new ManufacturerModel() : await _manufacturerService.GetManufactyrerById(id);
+            return View(model);
         }
     }
 }

@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MonitoringPrice.Services\MonitoringPrice.Services.csproj" />
-    <ProjectReference Include="..\MonitoringPrice.WebApi\MonitoringPrice.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

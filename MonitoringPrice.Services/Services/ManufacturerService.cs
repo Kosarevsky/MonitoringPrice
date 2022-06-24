@@ -17,5 +17,11 @@ namespace MonitoringPrice.Services.Services
             //var json = JsonSerializer.Deserialize<IEnumerable<ManufacturerModel>>(response);
             return response;
         }
+
+        public async Task<ManufacturerModel> GetManufactyrerById(int id)
+        {
+            var response = await _httpClient.GetFromJsonAsync<ManufacturerModel>($"Manufacturers/{id}");
+            return response;
+        }
     }
 }
