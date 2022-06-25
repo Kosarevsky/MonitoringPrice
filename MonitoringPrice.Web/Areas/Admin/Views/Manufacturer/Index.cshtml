@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ManufacturerModel>
+<h3>Справочник производителей</h3>
+<div class="div-box">
+    <a asp-area="Admin" asp-controller="Manufacturer" asp-action="Edit" asp-route-id="">Добавить производителя</a>
+</div>
+
+<div>
+    <div>
+        @if (Model.Any())
+        {
+            <div>
+                @foreach (ManufacturerModel entity in Model)
+                {
+                    <div>
+                        <a asp-area="Admin" asp-controller="Manufacturer" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
+                        |
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="Manufacturer" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@entity.Id">
+                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">удалить</a>
+                        </form>
+                        |
+                        <a asp-area="" asp-controller="Manufacturer" asp-action="Index" asp-route-id="@entity.Id">
+                            @($"{entity.ManufacturerName}")
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
