@@ -12,7 +12,7 @@ using MonitoringPrice.WebApi.Entities.Context;
 namespace MonitoringPrice.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220624155456_Init")]
+    [Migration("20220625114431_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

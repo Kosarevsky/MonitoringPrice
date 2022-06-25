@@ -10,10 +10,6 @@ namespace MonitoringPrice.WebApi.Entities.Models
         [Required]
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<User> Users { get; set; }
-        public Role()
-        {
-            Users = new List<User>();
-        }
+        //public ICollection<User> Users { get; set; }
     }
 }

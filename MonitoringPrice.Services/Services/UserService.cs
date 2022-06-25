@@ -10,9 +10,10 @@ namespace MonitoringPrice.Services.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<UserModel> GetUserByEmail(string email)
+        public async Task<UserModel> GetUser(UserModel user)
         {
-            var result = await _httpClient.GetFromJsonAsync<UserModel>($"User/{email}");
+            //var result = await _httpClient.PostAsJsonAsync<UserModel>($"User/{user}");
+            var result = await _httpClient.GetFromJsonAsync<UserModel>($"users/{user.Email}/{user.Password}");
             return result;
         }
 

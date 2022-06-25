@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -29,11 +28,11 @@ namespace MonitoringPrice.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserModel user = await _userService.GetUserByEmail(model.Email);
+                var userModel = new UserModel { Email = model.Email, Password = model.Password };
+                UserModel user = await _userService.GetUser(userModel);
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    user = new UserModel { Email = model.Email, Password = model.Password };
                     RoleModel userRole = await  _roleService.GetRoleByName("user");
 
                     if (userRole != null)
@@ -59,22 +58,20 @@ namespace MonitoringPrice.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    User user = await _context.Users
-            //        .Include(u => u.Role)
-            //        .FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+            if (ModelState.IsValid)
+            {
+                var userModel = new UserModel { Email = model.Email, Password = model.Password };
 
+                var user = await _userService.GetUser(userModel);
 
+                if (user != null)
+                {
+                    await Authenticate(user); // аутентификация
 
-            //    if (user != null)
-            //    {
-            //        await Authenticate(user); // аутентификация
-
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-            //}
+                    return Redirect("~/admin"); // RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }
             return View(model);
         }
         private async Task Authenticate(UserModel user)

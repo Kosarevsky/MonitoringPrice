@@ -16,6 +16,10 @@ builder.Services.AddHttpClient<IManufacturerService, ManufacturerService>(client
     client.BaseAddress = new Uri(uri);
 });
 
+builder.Services.AddHttpClient<IUserService, UserService>(client =>
+{
+    client.BaseAddress = new Uri(uri);
+});
 
 //настраиваем authentication cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

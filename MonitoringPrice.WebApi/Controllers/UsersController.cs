@@ -20,10 +20,10 @@ namespace MonitoringPrice.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
             return await _context.Users.ToListAsync();
         }
 
@@ -31,10 +31,10 @@ namespace MonitoringPrice.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
@@ -43,6 +43,19 @@ namespace MonitoringPrice.WebApi.Controllers
             }
 
             return user;
+        }
+
+        [HttpGet("{email}/{password}")]
+        public  Task<User> GetUser(string email, string password)
+        {
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+            {
+                var result =  _context.Users
+                    .Include(x => x.Role)
+                    .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+                return result;
+            }
+            return null;
         }
 
         // PUT: api/Users/5
@@ -78,18 +91,18 @@ namespace MonitoringPrice.WebApi.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-          if (_context.Users == null)
-          {
-              return Problem("Entity set 'AppDbContext.Users'  is null.");
-          }
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostUser(User user)
+        //{
+        //    if (_context.Users == null)
+        //    {
+        //        return Problem("Entity set 'AppDbContext.Users'  is null.");
+        //    }
+        //    _context.Users.Add(user);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }
+        //    return CreatedAtAction("GetUser", new { id = user.Id }, user);
+        //}
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
