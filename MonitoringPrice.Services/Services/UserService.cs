@@ -26,7 +26,7 @@ namespace MonitoringPrice.Services.Services
                 RoleId = userModel.RoleId,
                 Role = userModel.Role
             };
-            var result = await _httpClient.PostAsJsonAsync("user", user);
+            var result = await _httpClient.PostAsJsonAsync("users", user);
             return result;
         }
     }

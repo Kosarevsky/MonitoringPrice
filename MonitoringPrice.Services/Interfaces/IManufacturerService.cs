@@ -6,5 +6,6 @@ namespace MonitoringPrice.Services.Interfaces
     {
         Task<IEnumerable<ManufacturerModel>> GetAllManufacturerFromApi();
         Task<ManufacturerModel> GetManufactyrerById(int id);
+        Task<HttpResponseMessage> Save(ManufacturerModel manufacturer);
     }
 }

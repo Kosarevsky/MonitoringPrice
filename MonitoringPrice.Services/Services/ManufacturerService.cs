@@ -1,6 +1,6 @@
-﻿using MonitoringPrice.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using MonitoringPrice.Services.Interfaces;
 using MonitoringPrice.Services.Models;
-using System.Text.Json;
 
 namespace MonitoringPrice.Services.Services
 {
@@ -21,6 +21,12 @@ namespace MonitoringPrice.Services.Services
         public async Task<ManufacturerModel> GetManufactyrerById(int id)
         {
             var response = await _httpClient.GetFromJsonAsync<ManufacturerModel>($"Manufacturers/{id}");
+            return response;
+        }
+
+        public async Task<HttpResponseMessage> Save(ManufacturerModel manufacturer)
+        {
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("Manufacturers",manufacturer);
             return response;
         }
     }

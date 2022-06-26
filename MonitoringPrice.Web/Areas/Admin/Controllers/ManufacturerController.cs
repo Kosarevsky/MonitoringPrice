@@ -24,5 +24,14 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
             var model = id == default ? new ManufacturerModel() : await _manufacturerService.GetManufactyrerById(id);
             return View(model);
         }
+
+        public async Task<ActionResult> Save(ManufacturerModel manufacturer)
+        {
+            if (ModelState.IsValid)
+            {
+                await _manufacturerService.Save(manufacturer);
+            }
+            return View(manufacturer);
+        }
     }
 }

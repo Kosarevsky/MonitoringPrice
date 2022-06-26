@@ -2,39 +2,29 @@
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string strTitle = "Редактировать запись";
+    ViewBag.Title = strTitle;
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-
-<h4>Справочник производителей</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div>
+    <h2>@strTitle</h2>
+    <div>
+        <form asp-area="Admin" asp-controller="Manufacturer" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input asp-for="ManufacturerName" class="form-control" />
                 <span asp-validation-for="ManufacturerName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+            <input type="submit" value="Сохранить" />
         </form>
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
-
-</body>
-</html>
