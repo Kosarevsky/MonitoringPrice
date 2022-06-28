@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MonitoringPrice.Services\MonitoringPrice.Services.csproj" />
+    <ProjectReference Include="..\MonitoringPrice.Service\MonitoringPrice.Service.csproj" />
   </ItemGroup>
 
 </Project>

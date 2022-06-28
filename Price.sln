@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitoringPrice.Web", "Moni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitoringPrice.WebApi", "MonitoringPrice.WebApi\MonitoringPrice.WebApi.csproj", "{53F040D7-D3B6-4891-9E20-3B533928221D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitoringPrice.Services", "MonitoringPrice.Services\MonitoringPrice.Services.csproj", "{093F4D65-1F20-4289-B868-6A699C54597B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitoringPrice.Service", "MonitoringPrice.Service\MonitoringPrice.Service.csproj", "{CA760424-AC3C-4999-A255-4ADEBF775CC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{53F040D7-D3B6-4891-9E20-3B533928221D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53F040D7-D3B6-4891-9E20-3B533928221D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53F040D7-D3B6-4891-9E20-3B533928221D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{093F4D65-1F20-4289-B868-6A699C54597B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{093F4D65-1F20-4289-B868-6A699C54597B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{093F4D65-1F20-4289-B868-6A699C54597B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{093F4D65-1F20-4289-B868-6A699C54597B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA760424-AC3C-4999-A255-4ADEBF775CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA760424-AC3C-4999-A255-4ADEBF775CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA760424-AC3C-4999-A255-4ADEBF775CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA760424-AC3C-4999-A255-4ADEBF775CC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

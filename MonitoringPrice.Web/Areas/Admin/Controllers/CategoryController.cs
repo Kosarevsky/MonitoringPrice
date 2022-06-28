@@ -5,32 +5,32 @@ using MonitoringPrice.Services.Models;
 namespace MonitoringPrice.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ManufacturerController : Controller
+    public class CategoryController : Controller
     {
-        private readonly IManufacturerService _manufacturerService;
+        private readonly ICategoryService _categoryService;
 
-        public ManufacturerController(IManufacturerService manufacturerService)
+        public CategoryController(ICategoryService categoryService)
         {
-            _manufacturerService = manufacturerService;
+            _categoryService = categoryService;
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ManufacturerModel> bbb = await _manufacturerService.GetAllManufacturerFromApi();
+            IEnumerable<CategoryModel> bbb = await _categoryService.GetAllCategoryFromApi();
             return View(bbb);
         }
 
         public async Task<ActionResult> Edit(int id)
         {
-            var model = id == default ? new ManufacturerModel() : await _manufacturerService.GetManufactyrerById(id);
+            var model = id == default ? new CategoryModel() : await _categoryService.GetCategoryById(id);
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Save(ManufacturerModel manufacturer)
+        public async Task<ActionResult> Save(CategoryModel manufacturer)
         {
             if (ModelState.IsValid)
             {
-                await _manufacturerService.Save(manufacturer);
+                await _categoryService.SaveCategory(manufacturer);
             }
             return RedirectToAction("Index");
         }
@@ -38,7 +38,7 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
-            await _manufacturerService.Delete(id);
+            await _categoryService.DeleteCategory(id);
             return RedirectToAction("Index");
         }
     }

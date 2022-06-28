@@ -1,4 +1,4 @@
-﻿@model MonitoringPrice.Services.Models.ManufacturerModel
+﻿@model MonitoringPrice.Services.Models.CategoryModel
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -10,12 +10,12 @@
 <div>
     <h2>@strTitle</h2>
     <div>
-        <form asp-area="Admin" asp-controller="Manufacturer" asp-action="Save" method="post" enctype="multipart/form-data">
+        <form asp-area="Admin" asp-controller="Category" asp-action="Save" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <input asp-for="ManufacturerName" class="form-control" />
-                <span asp-validation-for="ManufacturerName" class="text-danger"></span>
+                <input asp-for="CategoryName" class="form-control" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
             </div>
 
             <input type="submit" value="Сохранить" />

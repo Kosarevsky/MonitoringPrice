@@ -9,18 +9,18 @@
         @if (Model.Any())
         {
             <div>
-                @foreach (ManufacturerModel entity in Model)
+                @foreach (ManufacturerModel item in Model)
                 {
                     <div>
-                        <a asp-area="Admin" asp-controller="Manufacturer" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
+                        <a asp-area="Admin" asp-controller="Manufacturer" asp-action="Edit" asp-route-id="@item.Id">редактировать</a>
                         |
-                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="Manufacturer" asp-action="Delete" method="post">
-                            <input type="hidden" name="id" value="@entity.Id">
-                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">удалить</a>
+                        <form style="display: inline-block;" id="form-@item.Id" asp-area="Admin" asp-controller="Manufacturer" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                            <input type="hidden" name="id" value="@item.Id">
+                            <a href="#" onclick="document.getElementById('form-@item.Id').submit();">удалить</a>
                         </form>
                         |
-                        <a asp-area="" asp-controller="Manufacturer" asp-action="Index" asp-route-id="@entity.Id">
-                            @($"{entity.ManufacturerName}")
+                        <a asp-area="" asp-controller="Manufacturer" asp-action="Index" asp-route-id="@item.Id">
+                            @($"{item.ManufacturerName}")
                         </a>
                     </div>
                 }

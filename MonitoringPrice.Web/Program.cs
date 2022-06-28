@@ -7,11 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Bind("Project", new Config());
 
 builder.Services.AddTransient<IManufacturerService, ManufacturerService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 
 var uri = "http://localhost:5201/api/";
 builder.Services.AddHttpClient<IManufacturerService, ManufacturerService>(client =>
+{
+    client.BaseAddress = new Uri(uri);
+});
+builder.Services.AddHttpClient<ICategoryService, CategoryService>(client =>
 {
     client.BaseAddress = new Uri(uri);
 });

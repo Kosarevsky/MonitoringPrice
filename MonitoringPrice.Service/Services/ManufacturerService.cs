@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MonitoringPrice.Services.Interfaces;
+﻿using MonitoringPrice.Services.Interfaces;
 using MonitoringPrice.Services.Models;
+using System.Net.Http.Json;
 
 namespace MonitoringPrice.Services.Services
 {

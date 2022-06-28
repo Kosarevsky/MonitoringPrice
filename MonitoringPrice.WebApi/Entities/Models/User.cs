@@ -6,6 +6,7 @@ namespace MonitoringPrice.WebApi.Entities.Models
     [Table("Users")]
     public class User
     {
+#nullable disable
         [Key]
         [Required]
         public int Id { get; set; }
@@ -15,5 +16,6 @@ namespace MonitoringPrice.WebApi.Entities.Models
         [ForeignKey("Role")]
         public int? RoleId { get; set; }
         public Role Role { get; set; }
+#nullable enable
     }
 }

@@ -20,10 +20,10 @@ namespace MonitoringPrice.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Manufacturer>>> GetManufacturer()
         {
-          if (_context.Manufacturer == null)
-          {
-              return NotFound();
-          }
+            if (_context.Manufacturer == null)
+            {
+                return NotFound();
+            }
             return await _context.Manufacturer.ToListAsync();
         }
 
@@ -31,10 +31,10 @@ namespace MonitoringPrice.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Manufacturer>> GetManufacturer(int id)
         {
-          if (_context.Manufacturer == null)
-          {
-              return NotFound();
-          }
+            if (_context.Manufacturer == null)
+            {
+                return NotFound();
+            }
             var manufacturer = await _context.Manufacturer.FirstOrDefaultAsync(x => x.Id == id);
 
             if (manufacturer == null)
@@ -47,45 +47,47 @@ namespace MonitoringPrice.WebApi.Controllers
 
         // PUT: api/Manufacturers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutManufacturer(int id, Manufacturer manufacturer)
-        {
-            if (id != manufacturer.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutManufacturer(int id, Manufacturer manufacturer)
+        //{
+        //    if (id != manufacturer.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(manufacturer).State = EntityState.Modified;
+        //    _context.Entry(manufacturer).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ManufacturerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ManufacturerExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/Manufacturers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Manufacturer>> PostManufacturer(Manufacturer manufacturer)
         {
-          if (_context.Manufacturer == null)
-          {
-              return Problem("Entity set 'AppDbContext.Manufacturer'  is null.");
-          }
+            if (_context.Manufacturer == null && manufacturer==null)
+            {
+                return Problem("Entity set 'AppDbContext.Manufacturer'  is null.");
+            }
             _context.Manufacturer.Add(manufacturer);
+            _context.Entry(manufacturer).State =  manufacturer.Id == default ? EntityState.Added : EntityState.Modified;
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetManufacturer", new { id = manufacturer.Id }, manufacturer);
@@ -109,11 +111,6 @@ namespace MonitoringPrice.WebApi.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ManufacturerExists(int id)
-        {
-            return (_context.Manufacturer?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,29 +1,44 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MonitoringPrice.Services.Interfaces;
+using MonitoringPrice.Services.Models;
+using MonitoringPrice.Web.Models;
 
 namespace MonitoringPrice.Web.Areas.Admin.Controllers
 {
-    public class HomeController1 : Controller
+    [Area("Admin")]
+    public class ProductController : Controller
     {
-        // GET: HomeController1
-        public ActionResult Index()
+        private readonly IProductService _productService;
+        private readonly IManufacturerService _manufacturerService;
+        private readonly ICategoryService _categoryService;
+        public ProductController(IProductService productService, IManufacturerService manufacturerService, ICategoryService categoryService)
         {
-            return View();
+            _productService = productService;
+            _manufacturerService = manufacturerService;
+            _categoryService = categoryService;
+            var productViewModel = new ProductViewModel();
         }
 
-        // GET: HomeController1/Details/5
+        // GET: ProductController
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<ProductModel> products = await _productService.GetAllProduct();
+            return View(products);
+        }
+
+        // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: HomeController1/Create
+        // GET: ProductController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: HomeController1/Create
+        // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -38,13 +53,13 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
             }
         }
 
-        // GET: HomeController1/Edit/5
+        // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Edit/5
+        // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -59,13 +74,13 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
             }
         }
 
-        // GET: HomeController1/Delete/5
+        // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Delete/5
+        // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
