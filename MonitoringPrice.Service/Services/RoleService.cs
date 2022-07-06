@@ -6,14 +6,16 @@ namespace MonitoringPrice.Services.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly HttpClient _httpClient;
-        public RoleService(HttpClient httpClient)
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _client;
+        public RoleService(IHttpClientFactory httpClient)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClient;
+            _client = _httpClientFactory.CreateClient("Price");
         }
         public Task<RoleModel> GetRoleByName(string name)
         {
-            var result = _httpClient.GetFromJsonAsync<RoleModel>($"Role/{name}"); //????
+            var result = _client.GetFromJsonAsync<RoleModel>($"Role/{name}"); //????
             return result;
         }
     }

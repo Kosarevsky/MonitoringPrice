@@ -1,21 +1,49 @@
-﻿@model ProductViewModel
+﻿@model ProductModel
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     string strTitle = "Редактировать запись";
     ViewBag.Title = strTitle;
+
+    var manufacturers = (List<ManufacturerModel>)ViewBag.Manufacturer;
+    var category = (List<CategoryModel>)ViewBag.Categories;
 }
+
+
 
 <div>
     <h2>@strTitle</h2>
+    <form class="form-check-inline" asp-area="Admin" asp-controller="Product" asp-action="Save" method="post" enctype="multipart/form-data">
+        <label>Категория :</label>
+
+        <select name="CategoryId">
+            @if (category.Any())
+            {
+                @foreach (var item in category)
+                {
+                    <option value="@item.Id">@item.CategoryName</option>
+                }
+            }
+        </select>
+
+        <lablel>Производитель : </lablel>
+        <select name="ManufacturerId">
+            @if (manufacturers.Any())
+            {
+                @foreach (var item in manufacturers)
+                {
+                    <option value="@item.Id">@item.ManufacturerName</option>
+                }
+            }
+
+        </select>
     <div>
-        <form asp-area="Admin" asp-controller="Product" asp-action="Save" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All"></div>
-@*            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <input asp-for="CategoryName" class="form-control" />
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
-            </div>*@
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
 
             <input type="submit" value="Сохранить" />
         </form>

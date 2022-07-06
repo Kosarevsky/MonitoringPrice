@@ -4,8 +4,8 @@ namespace MonitoringPrice.Web.Models
 {
     public class ProductViewModel
     {
-        IEnumerable<CategoryModel> CategoryModels { get; set; }
-        IEnumerable<ManufacturerModel> ManufacturerModels { get; set; }
-        IEnumerable<ProductModel> ProductModels { get; set; }
+        public IEnumerable<CategoryModel> CategoryModels { get; set; }
+        public IEnumerable<ManufacturerModel> ManufacturerModels { get; set; }
+        public IEnumerable<ProductModel> ProductModels { get; set; }
     }
 }

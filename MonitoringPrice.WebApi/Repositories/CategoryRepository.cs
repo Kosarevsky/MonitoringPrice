@@ -11,6 +11,7 @@ namespace MonitoringPrice.WebApi.Interfaces
         {
         }
 
+        [Obsolete]
         public void Save(Category entity)
         {
             if (entity.Id == default)

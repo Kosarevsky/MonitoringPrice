@@ -10,6 +10,8 @@ namespace MonitoringPrice.WebApi.Interfaces
         {
         }
 
+
+        [Obsolete]
         public void Save(Url entity)
         {
             if (entity.Id == default)

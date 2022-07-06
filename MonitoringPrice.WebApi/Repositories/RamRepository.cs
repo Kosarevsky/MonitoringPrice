@@ -10,6 +10,7 @@ namespace MonitoringPrice.WebApi.Interfaces
         {
         }
 
+        [Obsolete]
         public void Save(Ram entity)
         {
             if (entity.Id == default)

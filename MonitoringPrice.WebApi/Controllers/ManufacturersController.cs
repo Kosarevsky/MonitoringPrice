@@ -45,36 +45,6 @@ namespace MonitoringPrice.WebApi.Controllers
             return manufacturer;
         }
 
-        // PUT: api/Manufacturers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutManufacturer(int id, Manufacturer manufacturer)
-        //{
-        //    if (id != manufacturer.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(manufacturer).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ManufacturerExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
 
         // POST: api/Manufacturers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

@@ -6,16 +6,30 @@ namespace MonitoringPrice.Services.Services
 {
     public class ProductService : IProductService
     {
-        private readonly HttpClient _httpClient;
-        public ProductService(HttpClient httpClient)
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _client;
+        public ProductService(IHttpClientFactory httpClient)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClient;
+            _client = _httpClientFactory.CreateClient("Price");
         }
 
         public async Task<IEnumerable<ProductModel>> GetAllProduct()
         {
-            var result = await _httpClient.GetFromJsonAsync<IEnumerable<ProductModel>>("Products");
+            var result = await _client.GetFromJsonAsync<IEnumerable<ProductModel>>("Products");
             return result;
+        }
+
+        public async Task<ProductModel> GetProductById(int id)
+        {
+            var response = await _client.GetFromJsonAsync<ProductModel>($"Products/{id}");
+            return response;
+        }
+
+        public async Task<HttpResponseMessage> Save(ProductModel product)
+        {
+            HttpResponseMessage response = await _client.PostAsJsonAsync<ProductModel>("Products", product);
+            return response;
         }
     }
 }

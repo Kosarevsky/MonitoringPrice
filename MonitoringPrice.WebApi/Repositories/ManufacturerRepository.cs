@@ -10,6 +10,7 @@ namespace MonitoringPrice.WebApi.Interfaces
         {
         }
 
+        [Obsolete]
         public async Task<int> SaveAsync(Manufacturer entity)
         {
             if (entity.Id == default)

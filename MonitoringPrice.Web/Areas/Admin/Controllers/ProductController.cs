@@ -16,62 +16,67 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
             _productService = productService;
             _manufacturerService = manufacturerService;
             _categoryService = categoryService;
-            var productViewModel = new ProductViewModel();
         }
 
         // GET: ProductController
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductModel> products = await _productService.GetAllProduct();
-            return View(products);
+            ViewBag.Manufacturer = await _manufacturerService.GetAllManufacturerFromApi();
+            ViewBag.Categories = await _categoryService.GetAllCategoryFromApi();
+
+            var Product = await _productService.GetAllProduct();
+            return View(Product);
         }
 
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
+
+        // GET: ProductController/Edit/5
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            ViewBag.Manufacturer = await _manufacturerService.GetAllManufacturerFromApi();
+            ViewBag.Categories = await _categoryService.GetAllCategoryFromApi();
+
+            var model = new ProductModel();
+
+            if (id != 0)
+            {
+                model = await _productService.GetProductById(id);
+            }
+
+            return View(model);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Save(ProductModel editModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var categoryValue = Request.Form.FirstOrDefault(x => x.Key == "categoryId").Value;
+                int.TryParse(categoryValue, out int categoryInt);
+
+                if (categoryInt != 0)
+                { 
+                    var manufacturerValue = Request.Form.FirstOrDefault(x => x.Key == "manufacturerId").Value;
+                    int.TryParse(manufacturerValue, out int manufactureInt);
+
+                    if (manufactureInt != 0)
+                    {
+                        editModel.ManufacturerId = manufactureInt;
+                        editModel.CategoryId = categoryInt;
+                        await _productService.Save(editModel);
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+
+
+
 
         // GET: ProductController/Create
         public ActionResult Create()
         {
             return View();
-        }
-
-        // POST: ProductController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: ProductController/Delete/5
@@ -80,19 +85,5 @@ namespace MonitoringPrice.Web.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

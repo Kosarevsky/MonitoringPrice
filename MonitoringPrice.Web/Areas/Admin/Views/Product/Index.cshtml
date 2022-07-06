@@ -1,32 +1,58 @@
-﻿@model ProductViewModel
-<h3>Добавить продукт</h3>
+﻿@model IEnumerable<ProductModel>
+@{
+    var manufacturers = (List<ManufacturerModel>)ViewBag.Manufacturer;
+    var category = (List<CategoryModel>)ViewBag.Categories;
+}
+
+<h3>Перечень продуктов</h3>
 <div class="div-box">
     <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="">Добавить продукт</a>
 </div>
 
-<div>
-    <div>
-        @if (Model. Any())
+<form class="form-check-inline">
+    <label>Категория :</label>
+    <select name="categoryId">
+        @if (category.Any())
         {
-            <div>
-                @foreach (ProductModel item in Model.)
-                {
-                    <div>
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">редактировать</a>
-                        |
-                        <form style="display: inline-block;" id="form-@item.Id" asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" method="post">
-                            <input type="hidden" name="id" value="@item.Id">
-                            <a href="#" onclick="document.getElementById('form-@item.Id').submit();">удалить</a>
-                        </form>
-                        |
-                        <a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@item.Id">
-                            @($"{item.CategoryName}")
-                        </a>
-                    </div>
-                }
-            </div>
+            @foreach (var item in category)
+            {
+                <option value="@item.Id">@item.CategoryName</option>
+            }
         }
-    </div>
+    </select>
+
+    <lablel>Производитель : </lablel>
+    <select name="manufacturerId">
+        @if (Model.Any())
+        {
+            @foreach (var item in manufacturers)
+            {
+                <option value="@item.Id">@item.ManufacturerName</option>
+            }
+        }
+
+    </select>
+</form>
+
+<div>
+    @if (Model.Any())
+    {
+        <div>
+            @foreach (ProductModel item in Model)
+            {
+                <div>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">редактировать</a>
+                    |
+                    <form style="display: inline-block;" id="form-@item.Id" asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                        <input type="hidden" name="id" value="@item.Id">
+                        <a href="#" onclick="document.getElementById('form-@item.Id').submit();">удалить</a>
+                    </form>
+                    |
+                    <a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@item.Id">
+                        @($"{item.ProductName}")
+                    </a>
+                </div>
+            }
+        </div>
+    }
 </div>
-
-

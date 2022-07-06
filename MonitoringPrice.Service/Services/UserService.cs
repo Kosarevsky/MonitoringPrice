@@ -6,15 +6,17 @@ namespace MonitoringPrice.Services.Services
 {
     public class UserService : IUserService
     {
-        private readonly HttpClient _httpClient;
-        public UserService(HttpClient httpClient)
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _client;
+        public UserService(IHttpClientFactory httpClient)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClient;
+            _client = _httpClientFactory.CreateClient("Price");
         }
         public async Task<UserModel> GetUser(UserModel user)
         {
             //var result = await _httpClient.PostAsJsonAsync<UserModel>($"User/{user}");
-            var result = await _httpClient.GetFromJsonAsync<UserModel>($"users/{user.Email}/{user.Password}");
+            var result = await _client.GetFromJsonAsync<UserModel>($"users/{user.Email}/{user.Password}");
             return result;
         }
 
@@ -27,7 +29,7 @@ namespace MonitoringPrice.Services.Services
                 RoleId = userModel.RoleId,
                 Role = userModel.Role
             };
-            var result = await _httpClient.PostAsJsonAsync("users", user);
+            var result = await _client.PostAsJsonAsync("users", user);
             return result;
         }
     }

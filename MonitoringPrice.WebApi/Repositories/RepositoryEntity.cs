@@ -14,28 +14,34 @@ namespace MonitoringPrice.WebApi.Interfaces
             _dbSet = Context.Set<TEntity>();
         }
 
+        [Obsolete]
         public async Task<TEntity> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
+        [Obsolete]
         public async Task<IQueryable<TEntity>> GetAllAsync()
         {
             var query = await _dbSet.ToListAsync();
             return query.AsQueryable();
         }
 
+        [Obsolete]
         public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var query = await _dbSet.Where(predicate).ToListAsync();
             return query.AsQueryable();
         }
 
+        [Obsolete]
         public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var query = await _dbSet.Where(predicate).ToListAsync();
             return query.AsQueryable();
         }
+
+        [Obsolete]
         public async void DeleteAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
@@ -44,7 +50,5 @@ namespace MonitoringPrice.WebApi.Interfaces
             _dbSet.Remove(entity);
             await Context.SaveChangesAsync();
         }
-
-
     }
 }

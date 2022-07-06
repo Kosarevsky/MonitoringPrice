@@ -8,23 +8,17 @@ builder.Configuration.Bind("Project", new Config());
 
 builder.Services.AddTransient<IManufacturerService, ManufacturerService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 
 var uri = "http://localhost:5201/api/";
-builder.Services.AddHttpClient<IManufacturerService, ManufacturerService>(client =>
+
+builder.Services.AddHttpClient("Price",client =>
 {
-    client.BaseAddress = new Uri(uri);
-});
-builder.Services.AddHttpClient<ICategoryService, CategoryService>(client =>
-{
-    client.BaseAddress = new Uri(uri);
+    client.BaseAddress = new Uri(uri); 
 });
 
-builder.Services.AddHttpClient<IUserService, UserService>(client =>
-{
-    client.BaseAddress = new Uri(uri);
-});
 
 //настраиваем authentication cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -76,10 +70,3 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
-
-partial class Program
-{
-    public IConfiguration Configuration { get; }
-    public Program(IConfiguration configuration) => Configuration = configuration;
-}
-
