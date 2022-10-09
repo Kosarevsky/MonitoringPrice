@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using MonitoringPrice.Web.Models;
 using MonitoringPrice.Services.Models;
 using MonitoringPrice.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MonitoringPrice.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private IUserService _userService;

@@ -12,7 +12,7 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 
-var uri = "http://localhost:5201/api/";
+var uri = Config.WebApiPath;
 
 builder.Services.AddHttpClient("Price",client =>
 {
@@ -54,9 +54,12 @@ builder.Services.AddControllersWithViews(x =>
 });
 
 var app = builder.Build();
+if (app.Environment.IsDevelopment()) 
+{ 
+    app.UseDeveloperExceptionPage();
+}
 
-app.UseDeveloperExceptionPage();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
@@ -66,7 +69,6 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
     endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-    //endpoints.MapControllerRoute("default", "{controller=Payment}/{action=Index}/{id?}");
 });
 
 app.Run();

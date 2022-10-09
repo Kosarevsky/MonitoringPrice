@@ -9,40 +9,40 @@ namespace MonitoringPrice.WebApi.Interfaces
         protected readonly AppDbContext Context;
         private readonly DbSet<TEntity> _dbSet;
         protected RepositoryEntity(AppDbContext context)
-        { 
+        {
             Context = context;
             _dbSet = Context.Set<TEntity>();
         }
 
         [Obsolete]
-        public async Task<TEntity> GetByIdAsync(int id)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
         [Obsolete]
-        public async Task<IQueryable<TEntity>> GetAllAsync()
+        public virtual async Task<IQueryable<TEntity>> GetAllAsync()
         {
             var query = await _dbSet.ToListAsync();
             return query.AsQueryable();
         }
 
         [Obsolete]
-        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var query = await _dbSet.Where(predicate).ToListAsync();
             return query.AsQueryable();
         }
 
         [Obsolete]
-        public async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IQueryable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var query = await _dbSet.Where(predicate).ToListAsync();
             return query.AsQueryable();
         }
 
         [Obsolete]
-        public async void DeleteAsync(int id)
+        public virtual async void DeleteAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
 

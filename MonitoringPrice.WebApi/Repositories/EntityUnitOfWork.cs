@@ -5,11 +5,7 @@ namespace MonitoringPrice.WebApi.Interfaces
     public sealed class EntityUnitOfWork :IUnitOfWork
     {
         private readonly AppDbContext _context;
-        public EntityUnitOfWork(AppDbContext context)
-        {
-            _context = context;
-
-        }
+        public EntityUnitOfWork(AppDbContext context) => _context = context;
 
         private CategoryRepository _categoryRepository;
         public ICategoryRepository Category => _categoryRepository

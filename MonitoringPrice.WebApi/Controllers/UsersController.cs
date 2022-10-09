@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonitoringPrice.WebApi.Entities.Context;
 using MonitoringPrice.WebApi.Entities.Models;
@@ -18,7 +19,7 @@ namespace MonitoringPrice.WebApi.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<IdentityUser>>> GetUsers()
         {
             if (_context.Users == null)
             {
@@ -29,7 +30,7 @@ namespace MonitoringPrice.WebApi.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<IdentityUser>> GetUser(int id)
         {
             if (_context.Users == null)
             {
@@ -46,13 +47,13 @@ namespace MonitoringPrice.WebApi.Controllers
         }
 
         [HttpGet("{email}/{password}")]
-        public  Task<User> GetUser(string email, string password)
+        public  Task<IdentityUser> GetUser(string email, string password)
         {
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
             {
                 var result =  _context.Users
-                    .Include(x => x.Role)
-                    .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+                    //.Include(x => x.Role)
+                    .FirstOrDefaultAsync(x => x.Email == email && x.PasswordHash == password);
                 return result;
             }
             return null;
@@ -61,7 +62,7 @@ namespace MonitoringPrice.WebApi.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(string id, User user)
         {
             if (id != user.Id)
             {
@@ -110,7 +111,7 @@ namespace MonitoringPrice.WebApi.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string id)
         {
             return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
